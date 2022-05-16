@@ -1,0 +1,146 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.page-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.page-header__title, .page-header__subtitle {
+  font-family: 'Codystar', cursive;
+  text-align: center;
+  text-shadow: 0 0 0.5em white;
+  color: orange;
+}
+
+.page-header__title {
+  font-size: 2rem;
+}
+
+.page-header__subtitle {
+  font-size: 1rem;
+}
+
+body {
+  background-color: black;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+#react-target {
+  height: 100%;
+}
+
+.tag {
+  font-family: 'Exo', sans-serif;
+  background-color: rgb(255, 255, 255, 0.65);
+  border-radius: 1em;
+  box-shadow: 0 0 5px rgb(255, 255, 255, 0.65);
+}
+
+.tag__title {
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  width: 85%;
+  padding: 1em;
+}
+
+.tag__tx-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@keyframes move-background {
+  from {
+		-webkit-transform: translate3d(0px, 0px, 0px);
+	}
+
+	to { 
+		-webkit-transform: translate3d(1000px, 0px, 0px);
+	}
+}
+@-webkit-keyframes move-background {
+  from {
+		-webkit-transform: translate3d(0px, 0px, 0px);
+	}
+
+	to { 
+		-webkit-transform: translate3d(1000px, 0px, 0px);
+	}
+}
+
+@-moz-keyframes move-background {    
+	from {
+		-webkit-transform: translate3d(0px, 0px, 0px);
+	}
+
+	to { 
+		-webkit-transform: translate3d(1000px, 0px, 0px);
+	}
+}
+
+@-webkit-keyframes move-background {
+	from {
+		-webkit-transform: translate3d(0px, 0px, 0px);
+	}
+
+	to { 
+		-webkit-transform: translate3d(1000px, 0px, 0px);
+	}
+}
+
+.background-container{
+	position: fixed;
+	top: 0;
+	left:0;
+	bottom: 0;
+	right: 0;
+}
+
+.stars {
+  background: black url('images/stars.png') repeat;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  z-index: -1;
+}
+
+.twinkling {
+	width: 10000px;
+	height: 100%;
+	background: transparent url('images/twinkling.png') repeat;
+	background-size: 1000px 1000px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+    
+  -moz-animation:move-background 70s linear infinite;
+  -ms-animation:move-background 70s linear infinite;
+  -o-animation:move-background 70s linear infinite;
+  -webkit-animation:move-background 70s linear infinite;
+  animation:move-background 70s linear infinite;
+}
+
+.moon {
+  height: 50vh;
+  width: 50vh;
+  position: absolute;
+  z-index: 0;
+  top: 5vh;
+  right: 2vh;
+}
