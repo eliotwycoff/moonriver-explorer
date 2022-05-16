@@ -95,7 +95,10 @@ export const ThreeCanvas = () => {
     <Fragment>
       <header className='page-header animate__animated animate__fadeIn'>
         <h1 className='page-header__title'>Moonriver Network Activity</h1>
-        <h2 className='page-header__subtitle'>Block { (state.nextBlock-1).toLocaleString() }</h2>
+        <h2 className='page-header__subtitle'>
+          Block <span className='animate__animated animate__flash animate__fast' key={state.nextBlock}>
+            { (state.nextBlock-1).toLocaleString() }</span>
+        </h2>
       </header>
         <img className='moon' src='images/moon.png' alt='full moon'/>
         <div className='stars'></div>
