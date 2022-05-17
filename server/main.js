@@ -10,20 +10,22 @@ import '/imports/api/accountsPublications.js';
 import '/imports/api/transactionsMethods.js';
 import '/imports/api/transactionsPublications.js';
 
-const config = {
-	storedBlockHeight: 20
-}
-
 try {
 	// This works in development.
 	require('dotenv').config({ path: Assets.absoluteFilePath('.env') });
-	config.rpc = process.env.RPC_URL
-	config.ws = process.env.WS_URL
 } catch(error) {
 	// But it fails on Meteor's free hosting solution, "Galaxy,"
-	// so we have to get the environment variables in a different way.
-	config.rpc = Meteor.settings.RPC_URL
-	config.ws = Meteor.settings.WS_URL
+	// so we have to set the environment variables manually.
+	if (process.env.RPC_URL) {
+		console.log('Environment variables found!');
+	} else {
+		console.error('Please set the RPC_URL.');
+	}
+}
+
+const config = {
+	storedBlockHeight: 20,
+	rpc: process.env.RPC_URL
 }
 
 const ethers = require('ethers');
