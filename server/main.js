@@ -19,6 +19,7 @@ if (Meteor.isDevelopment) {
 	config.rpc = process.env.RPC_URL;
 } else if (Meteor.isProduction) {
 	console.log(Meteor.settings);
+	console.log(process.env);
 	config.rpc = Meteor.settings.RPC_URL
 }
 
