@@ -187,8 +187,9 @@ Meteor.startup(() => {
 				});
 			}
 		}).catch((error) => {
-			console.error('Could not establish a connection with the provider!');
+			console.log('Could not establish a connection with the provider!');
 			console.log(`RPC URL: ${config.rpc}`);
+			console.error('Terminating...');
 	});
 
 	// Create indexes on the transactions and accounts collections, if they don't already exist.
