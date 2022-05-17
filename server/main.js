@@ -16,6 +16,9 @@ try {
 } catch(error) {
 	// But it fails on Meteor's free hosting solution, "Galaxy,"
 	// so we have to set the environment variables manually.
+	console.log(Meteor.settings);
+	console.log(Meteor.settings.env);
+
 	if (process.env.RPC_URL) {
 		console.log('Environment variables found!');
 	} else {
