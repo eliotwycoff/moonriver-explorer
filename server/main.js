@@ -18,13 +18,10 @@ if (Meteor.isDevelopment) {
 	require('dotenv').config({ path: Assets.absoluteFilePath('.env') });
 	config.rpc = process.env.RPC_URL;
 } else if (Meteor.isProduction) {
-	console.log(Meteor.settings);
-
-	// under construction
+	config.rpc = Meteor.settings.RPC_URL
 }
 
 const ethers = require('ethers');
-
 const provider = new ethers.providers.StaticJsonRpcProvider(config.rpc);
 
 const insertTransaction = (tx, timestamp) => {
