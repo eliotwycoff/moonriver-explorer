@@ -9,14 +9,24 @@ import '/imports/api/accountsMethods.js';
 import '/imports/api/accountsPublications.js';
 import '/imports/api/transactionsMethods.js';
 import '/imports/api/transactionsPublications.js';
-require('dotenv').config({ path: Assets.absoluteFilePath('.env') });
-const ethers = require('ethers');
 
 const config = {
-	rpc: process.env.RPC_URL,
-	ws: process.env.WS_URL,
 	storedBlockHeight: 20
-};
+}
+
+try {
+	// This works in development.
+	require('dotenv').config({ path: Assets.absoluteFilePath('.env') });
+	config.rpc = process.env.RPC_URL
+	config.ws = process.env.WS_URL
+} catch(error) {
+	// But it fails on Meteor's free hosting solution, "Galaxy,"
+	// so we have to get the environment variables in a different way.
+	config.rpc = Meteor.settings.RPC_URL
+	config.ws = Meteor.settings.WS_URL
+}
+
+const ethers = require('ethers');
 
 const provider = new ethers.providers.StaticJsonRpcProvider(config.rpc);
 

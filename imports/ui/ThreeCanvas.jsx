@@ -68,7 +68,6 @@ const Vertex = ({ address, transactions, startingPosition, targetPosition, start
           </div>
         </Html> : ''
       }
-      
     </mesh>
   );
 };
