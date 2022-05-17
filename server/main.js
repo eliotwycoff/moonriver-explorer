@@ -170,6 +170,9 @@ Meteor.startup(() => {
 	// Check for the latest block number and set the state information accordingly.
 	provider.getBlockNumber()
 		.then((blockNumber) => {
+			// For debugging purposes in production:
+			console.log('Successfully connected to the provider!');
+
 			if (!state) {
 				state = { 
 					nextBlock: blockNumber,
@@ -203,42 +206,44 @@ Meteor.startup(() => {
 			// Get the current state (and next block number).
 			state = StatesCollection.findOne({});
 
-			// Try to get the transactions for this block.
-			provider.getBlockWithTransactions(state.nextBlock)
-				.then((data) => {
-					// If the block exists and no errors occurred, save the transactions and related accounts.
-					console.log(`Parsing data from block ${state.nextBlock}!`);
-					data.transactions.map(tx => insertTransaction(tx, data.timestamp));
-			
-					// Update the state document.
-					StatesCollection.update(state._id, {
-						$set: { nextBlock: state.nextBlock + 1 }
-					});
+			if (state) { // on startup, the state might not yet exist
+				// Try to get the transactions for this block.
+				provider.getBlockWithTransactions(state.nextBlock)
+					.then((data) => {
+						// If the block exists and no errors occurred, save the transactions and related accounts.
+						console.log(`Parsing data from block ${state.nextBlock}!`);
+						data.transactions.map(tx => insertTransaction(tx, data.timestamp));
+				
+						// Update the state document.
+						StatesCollection.update(state._id, {
+							$set: { nextBlock: state.nextBlock + 1 }
+						});
 
-					// Remove old transactions and accounts.
-					removeDocumentsBefore(state.nextBlock-state.storedBlockHeight);
+						// Remove old transactions and accounts.
+						removeDocumentsBefore(state.nextBlock-state.storedBlockHeight);
 
-					// Update the target positions of each account.
-					const accounts = AccountsCollection.find({}).fetch();
-					updateTargetPositions(state, accounts);
+						// Update the target positions of each account.
+						const accounts = AccountsCollection.find({}).fetch();
+						updateTargetPositions(state, accounts);
 
-					// Output some stats to the console.
-					const contracts = AccountsCollection.find({ isContract: true }).fetch();
-					const eoas = AccountsCollection.find({ isContract: false }).fetch();
+						// Output some stats to the console.
+						const contracts = AccountsCollection.find({ isContract: true }).fetch();
+						const eoas = AccountsCollection.find({ isContract: false }).fetch();
 
-					console.log(`Accounts  : ${accounts.length}`);
-					console.log(` Contracts: ${contracts.length}`);
-					console.log(` EOAs     : ${eoas.length}`);
-					console.log(`Transactions : ${TransactionsCollection.find({}).count()}`);
-					console.log(` Per Contract: ${contracts.reduce((a,c) => a + c.transactionHashes.length, 0)/contracts.length}`);
-					console.log(` Per EOA     : ${eoas.reduce((a,c) => a + c.transactionHashes.length, 0)/eoas.length}`);
-					console.log('.');
-				})
-				.catch((error) => {
-					// Otherwise, let the user know that we are waiting on the next block.
-					//console.log(`Waiting on block ${state.nextBlock}...`);
-					console.log('.');
-			}); 
+						console.log(`Accounts  : ${accounts.length}`);
+						console.log(` Contracts: ${contracts.length}`);
+						console.log(` EOAs     : ${eoas.length}`);
+						console.log(`Transactions : ${TransactionsCollection.find({}).count()}`);
+						console.log(` Per Contract: ${contracts.reduce((a,c) => a + c.transactionHashes.length, 0)/contracts.length}`);
+						console.log(` Per EOA     : ${eoas.reduce((a,c) => a + c.transactionHashes.length, 0)/eoas.length}`);
+						console.log('.');
+					})
+					.catch((error) => {
+						// Otherwise, let the user know that we are waiting on the next block.
+						//console.log(`Waiting on block ${state.nextBlock}...`);
+						console.log('.');
+				}); 
+			}
 
 			// Repeat this job in 6 seconds.
 			this.replicate({
