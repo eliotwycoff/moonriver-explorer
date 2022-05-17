@@ -18,9 +18,9 @@ if (Meteor.isDevelopment) {
 	require('dotenv').config({ path: Assets.absoluteFilePath('.env') });
 	config.rpc = process.env.RPC_URL;
 } else if (Meteor.isProduction) {
-	console.log(`Settings: ${Meteor.settings}`);
-	console.log(`Env: ${process.env}`);
-	console.log(`Args: ${process.argv}`);
+	console.log(Meteor.settings);
+	console.log(process.env);
+	console.log(process.argv);
 	config.rpc = Meteor.settings.RPC_URL
 }
 
