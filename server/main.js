@@ -186,7 +186,9 @@ Meteor.startup(() => {
 						storedBlockHeight: config.storedBlockHeight }
 				});
 			}
-		});
+		}).catch((error) => {
+			console.error('Could not establish a connection with the provider!');
+	});
 
 	// Create indexes on the transactions and accounts collections, if they don't already exist.
 	TransactionsCollection.createIndex({ hash: 1 });
