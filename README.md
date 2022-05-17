@@ -2,7 +2,7 @@
 A three-js, real-time window into transactions from the last 20 blocks on Moonriver, hacked together in two days
 
 ## Setup
-To get this working, you will need a free api url/key from a Moonriver provider. I went with On Finality: https://app.onfinality.io. Create a "private" folder in the project's root directory, and put the api key/url in a .env file in this folder. E.g.: WS_URL=[your api key/url]
+To get this working, you will need a free api url/key from a Moonriver provider. I went with On Finality: https://app.onfinality.io. Create a "private" folder in the project's root directory, and put the api key/url in a .env file in this folder. E.g.: RPC_URL=[your api key/url]
 
 This is a Meteor/React project, so once you're all set, run "meteor run" in your root directory.
 
