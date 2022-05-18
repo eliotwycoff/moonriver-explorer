@@ -1,5 +1,5 @@
 # Moonriver Explorer
-A three-js, real-time window into transactions from the last 10 blocks on Moonriver, hacked together in two days
+A three-js, real-time window into transactions from the last 20 blocks on Moonriver, hacked together in two days
 
 ## Setup
 To get this working, you will need a free api url/key from a Moonriver provider. I went with On Finality: https://app.onfinality.io. Create a "private" folder in the project's root directory, and put the api url/key in a .env file in this folder. E.g.: RPC_URL=[your api url/key]
